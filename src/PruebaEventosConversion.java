@@ -13,8 +13,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
 class EventosComboBox extends JFrame implements ActionListener{
-
-	JButton btnConv;
+	
 	JTextField cajaTemp1,cajaTemp2;
 	JComboBox<String> comboTmp1 = new JComboBox<String>();
 	JComboBox<String> comboTmp2 = new JComboBox<String>();
@@ -23,15 +22,18 @@ class EventosComboBox extends JFrame implements ActionListener{
 	public EventosComboBox() {
 		getContentPane().setLayout(new FlowLayout());
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setSize(400,80);
+		setSize(500,80);
 		setLocationRelativeTo(null);
 		setTitle("Eventos ComboBox");
 		setVisible(true);
 		
+		JLabel lblConv = new JLabel("convertir:");
+		add(lblConv);
+		
 		cajaTemp1 = new JTextField(5);
 		cajaTemp1.setToolTipText("Presiona ENTER para Convertir");
 		cajaTemp1.addActionListener(this);
-		cajaTemp1.addKeyListener(new KeyAdapter() {
+		cajaTemp1.addKeyListener(new KeyAdapter() {//validacion
 			public void keyPressed(KeyEvent ke) {
 				String value = cajaTemp1.getText();
 				int code=ke.getKeyCode();
@@ -44,42 +46,43 @@ class EventosComboBox extends JFrame implements ActionListener{
 		});
 		add(cajaTemp1);
 		
-		comboTmp1.addItem("C");
-		comboTmp1.addItem("F");
-		comboTmp1.addItem("R");
+		comboTmp1.addItem("Centigrados");
+		comboTmp1.addItem("Fahrenheit");
+		comboTmp1.addItem("Rankine");
+		comboTmp1.addActionListener(this);
 		add(comboTmp1);
 		
-		btnConv = new JButton("convertir>>>>");
-		btnConv.addActionListener(this);
-		add(btnConv);
+		JLabel to = new JLabel("A:");
+		add(to);
+		
+		comboTmp2.addItem("Centigrados");
+		comboTmp2.addItem("Fahrenheit");
+		comboTmp2.addItem("Rankine");
+		comboTmp2.addActionListener(this);
+		add(comboTmp2);
 		
 		cajaTemp2 = new JTextField(5);
 		cajaTemp2.setEditable(false);
 		add(cajaTemp2);
-		
-		comboTmp2.addItem("C");
-		comboTmp2.addItem("F");
-		comboTmp2.addItem("R");
-		add(comboTmp2);
 		
 	
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource()==btnConv || e.getSource()==cajaTemp1) {
+		if (e.getSource()==cajaTemp1||e.getSource()==comboTmp1||e.getSource()==comboTmp2) {
 			double cnv=Double.parseDouble(cajaTemp1.getText());
-			if (comboTmp1.getSelectedItem()=="C" && comboTmp2.getSelectedItem()=="F") {
+			if (comboTmp1.getSelectedItem()=="Centigrados" && comboTmp2.getSelectedItem()=="Fahrenheit") {
 				cnv=(cnv*1.8)+32;
-			}else if (comboTmp1.getSelectedItem()=="C" && comboTmp2.getSelectedItem()=="R") {
+			}else if (comboTmp1.getSelectedItem()=="Centigrados" && comboTmp2.getSelectedItem()=="Rankine") {
 				cnv=(cnv*1.8)+491.67;
-			}else if (comboTmp1.getSelectedItem()=="F" && comboTmp2.getSelectedItem()=="C") {
+			}else if (comboTmp1.getSelectedItem()=="Fahrenheit" && comboTmp2.getSelectedItem()=="Centigrados") {
 				cnv=(cnv-32)*5/9;	
-			}else if (comboTmp1.getSelectedItem()=="F" && comboTmp2.getSelectedItem()=="R") {
+			}else if (comboTmp1.getSelectedItem()=="Fahrenheit" && comboTmp2.getSelectedItem()=="Rankine") {
 				cnv=(cnv+459.67);	
-			}else if (comboTmp1.getSelectedItem()=="R" && comboTmp2.getSelectedItem()=="C") {
+			}else if (comboTmp1.getSelectedItem()=="Rankine" && comboTmp2.getSelectedItem()=="Centigrados") {
 				cnv=(cnv-491.67)*5/9;	
-			}else if (comboTmp1.getSelectedItem()=="R" && comboTmp2.getSelectedItem()=="F") {
+			}else if (comboTmp1.getSelectedItem()=="Rankine" && comboTmp2.getSelectedItem()=="Fahrenheit") {
 				cnv=(cnv-459.67);	
 			}
 			cnv = Math.round(cnv * 100.0) / 100.0;
