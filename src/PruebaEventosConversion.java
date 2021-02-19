@@ -70,6 +70,9 @@ class EventosComboBox extends JFrame implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		if (cajaTemp1.getText().equals("")||cajaTemp1.getText().equals(".")) {
+			cajaTemp1.setText("0");
+		}
 		if (e.getSource()==cajaTemp1||e.getSource()==comboTmp1||e.getSource()==comboTmp2) {
 			double cnv=Double.parseDouble(cajaTemp1.getText());
 			if (comboTmp1.getSelectedItem()=="Centigrados" && comboTmp2.getSelectedItem()=="Fahrenheit") {
