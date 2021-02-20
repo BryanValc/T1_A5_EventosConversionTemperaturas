@@ -37,7 +37,7 @@ class EventosComboBox extends JFrame implements ActionListener{
 			public void keyPressed(KeyEvent ke) {
 				String value = cajaTemp1.getText();
 				int code=ke.getKeyCode();
-				if ((ke.getKeyChar() >= '0' && ke.getKeyChar() <= '9')	||	(!value.contains(".")&&ke.getKeyChar()=='.') || (code==KeyEvent.VK_BACK_SPACE)) {
+				if ((ke.getKeyChar() >= '0' && ke.getKeyChar() <= '9')	||	(!value.contains(".")&&ke.getKeyChar()=='.') || (code==KeyEvent.VK_BACK_SPACE)||	(!value.contains("-")&&ke.getKeyChar()=='-')) {
 					cajaTemp1.setEditable(true);
 				}else{
 					cajaTemp1.setEditable(false);
