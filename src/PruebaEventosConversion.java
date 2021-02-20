@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
@@ -17,7 +18,6 @@ class EventosComboBox extends JFrame implements ActionListener{
 	JTextField cajaTemp1,cajaTemp2;
 	JComboBox<String> comboTmp1 = new JComboBox<String>();
 	JComboBox<String> comboTmp2 = new JComboBox<String>();
-	
 	
 	public EventosComboBox() {
 		getContentPane().setLayout(new FlowLayout());
@@ -49,6 +49,7 @@ class EventosComboBox extends JFrame implements ActionListener{
 		comboTmp1.addItem("Centigrados");
 		comboTmp1.addItem("Fahrenheit");
 		comboTmp1.addItem("Rankine");
+		comboTmp1.addItem("Kelvin");
 		comboTmp1.addActionListener(this);
 		add(comboTmp1);
 		
@@ -58,6 +59,7 @@ class EventosComboBox extends JFrame implements ActionListener{
 		comboTmp2.addItem("Centigrados");
 		comboTmp2.addItem("Fahrenheit");
 		comboTmp2.addItem("Rankine");
+		comboTmp2.addItem("Kelvin");
 		comboTmp2.addActionListener(this);
 		add(comboTmp2);
 		
@@ -73,25 +75,40 @@ class EventosComboBox extends JFrame implements ActionListener{
 		if (cajaTemp1.getText().equals("")||cajaTemp1.getText().equals(".")) {
 			cajaTemp1.setText("0");
 		}
-		if (e.getSource()==cajaTemp1||e.getSource()==comboTmp1||e.getSource()==comboTmp2) {
+		if (comboTmp1.getSelectedItem()==comboTmp2.getSelectedItem()) {
+			JOptionPane.showMessageDialog(null, "No tiene sentido la conversión", "InfoBox: " + "Incoherencia", JOptionPane.INFORMATION_MESSAGE);
+		}else if (e.getSource()==cajaTemp1||e.getSource()==comboTmp1||e.getSource()==comboTmp2) {
 			double cnv=Double.parseDouble(cajaTemp1.getText());
+			
 			if (comboTmp1.getSelectedItem()=="Centigrados" && comboTmp2.getSelectedItem()=="Fahrenheit") {
 				cnv=(cnv*1.8)+32;
 			}else if (comboTmp1.getSelectedItem()=="Centigrados" && comboTmp2.getSelectedItem()=="Rankine") {
 				cnv=(cnv*1.8)+491.67;
+			}else if (comboTmp1.getSelectedItem()=="Centigrados" && comboTmp2.getSelectedItem()=="Kelvin") {
+				cnv=cnv+ 273.15;
 			}else if (comboTmp1.getSelectedItem()=="Fahrenheit" && comboTmp2.getSelectedItem()=="Centigrados") {
 				cnv=(cnv-32)*5/9;	
 			}else if (comboTmp1.getSelectedItem()=="Fahrenheit" && comboTmp2.getSelectedItem()=="Rankine") {
 				cnv=(cnv+459.67);	
+			}else if (comboTmp1.getSelectedItem()=="Fahrenheit" && comboTmp2.getSelectedItem()=="Kelvin") {
+				cnv=(cnv-32)*5/9+273.15;
 			}else if (comboTmp1.getSelectedItem()=="Rankine" && comboTmp2.getSelectedItem()=="Centigrados") {
 				cnv=(cnv-491.67)*5/9;	
 			}else if (comboTmp1.getSelectedItem()=="Rankine" && comboTmp2.getSelectedItem()=="Fahrenheit") {
 				cnv=(cnv-459.67);	
+			}else if (comboTmp1.getSelectedItem()=="Rankine" && comboTmp2.getSelectedItem()=="Kelvin") {
+				cnv=cnv*5/9;	
+			}else if (comboTmp1.getSelectedItem()=="Kelvin" && comboTmp2.getSelectedItem()=="Centigrados") {
+				cnv=cnv-273.15;
+			}else if (comboTmp1.getSelectedItem()=="Kelvin" && comboTmp2.getSelectedItem()=="Fahrenheit") {
+				cnv=(cnv - 273.15) * 9/5 + 32;
+			}else if (comboTmp1.getSelectedItem()=="Kelvin" && comboTmp2.getSelectedItem()=="Rankine") {
+				cnv=cnv*9/5;	
 			}
+			
 			cnv = Math.round(cnv * 100.0) / 100.0;
 			cajaTemp2.setText(String.valueOf(cnv));
 	
-			
 		}
 		
 	}
